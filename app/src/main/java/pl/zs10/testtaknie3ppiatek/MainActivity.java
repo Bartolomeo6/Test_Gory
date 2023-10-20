@@ -2,6 +2,7 @@ package pl.zs10.testtaknie3ppiatek;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -63,16 +64,25 @@ public class MainActivity extends AppCompatActivity {
                             wyswietlPytanie(aktualne);
                         else {
                             int p=podliczPunkty();
-                            zakonczTest(p);//nie widac tak nie podpowiedz kolejne, zamiast pytania jest liczba punktów
+                            zakonczTest(p);                 //nie widac - tak, nie, podpowiedz, kolejne - zamiast pytania jest liczba punktów
                         }
                     }
                 }
         );
         buttonPodpowiedz = findViewById(R.id.button3);
+
+        /* Intencja:
+        - jawna -> wiemy w jaki sposób jest przekazywane
+        - niejawna -> ??? (nic nie wiemy, co zrobi, nie wiem czym)
+        */
+
         buttonPodpowiedz.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                         Intent intent = new Intent(MainActivity.this, PodpowiedzActivity.class);
+                         intent.putExtra("NR",aktualne);
+                         startActivity(intent);
 
                     }
                 }
