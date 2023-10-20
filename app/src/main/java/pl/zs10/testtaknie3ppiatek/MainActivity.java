@@ -1,5 +1,6 @@
 package pl.zs10.testtaknie3ppiatek;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,13 +24,27 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Pytanie> pytanies = RepozytoriumPytania.utworzPytania();
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("NRPYTANKA",aktualne);              // kod -> przekazywany do 'savedIntanceState'
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textView);
         imageView = findViewById(R.id.imageView);
 
-        wyswietlPytanie(0);
+        if(savedInstanceState != null) {
+            aktualne = savedInstanceState.getInt("NRPYTANKA");          // obracanie nie psuje aplikacji
+            wyswietlPytanie(aktualne);
+        }
+        else {
+            wyswietlPytanie(0);
+        }
+
         buttonTak = findViewById(R.id.button);
         buttonTak.setOnClickListener(
                 new View.OnClickListener() {
@@ -121,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(pytanie.getTrescPytania());
         imageView.setImageResource(pytanie.getIdObrazu());
     }
-    //TODO: przycisk podpowiedź
-    //TODO: odporność na obracanie
     //TODO: -||- na cheaterów :D
+    //TODO:
 }
